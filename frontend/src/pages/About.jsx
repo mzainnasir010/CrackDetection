@@ -1,220 +1,148 @@
-// About page - Project information
+import { Brain, Server, Code2, Layers } from 'lucide-react';
+import { Card, SectionHeader, Badge } from '../components/UI';
+import { MODEL_LIST, COLORS } from '../theme';
 
-import { motion } from 'framer-motion';
-import { Brain, Code, Database, LineChart } from 'lucide-react';
-import Card from '../components/UI/Card';
+const TECH = [
+  {
+    label: 'Deep Learning',
+    icon:  Brain,
+    color: COLORS.accent,
+    items: ['TensorFlow 2.19', 'Keras API', 'ImageDataGenerator', 'MirroredStrategy (multi-GPU)'],
+  },
+  {
+    label: 'Architectures',
+    icon:  Layers,
+    color: COLORS.resnet,
+    items: ['EfficientNetB0', 'ResNet50', 'MobileNetV2', 'DenseNet121'],
+  },
+  {
+    label: 'Backend',
+    icon:  Server,
+    color: COLORS.mobilenet,
+    items: ['FastAPI', 'Python 3.12', 'Uvicorn', 'Pillow / NumPy'],
+  },
+  {
+    label: 'Frontend',
+    icon:  Code2,
+    color: COLORS.densenet,
+    items: ['React 18 + Vite', 'Recharts', 'React Router v6', 'CSS Variables'],
+  },
+];
 
-const About = () => {
-    const technologies = [
-        {
-            category: 'Deep Learning',
-            icon: Brain,
-            items: ['TensorFlow 2.18', 'Keras', 'VGG16 Architecture', 'ResNet50 Architecture'],
-        },
-        {
-            category: 'Backend',
-            icon: Database,
-            items: ['FastAPI', 'Python 3.9+', 'Uvicorn', 'Pillow'],
-        },
-        {
-            category: 'Frontend',
-            icon: Code,
-            items: ['React 18', 'Vite', 'Tailwind CSS', 'Framer Motion', 'Recharts'],
-        },
-        {
-            category: 'Deployment',
-            icon: LineChart,
-            items: ['RESTful API', 'CORS Enabled', 'Model Caching', 'Real-time Inference'],
-        },
-    ];
-
-    return (
-        <div className="container mx-auto px-4 py-8">
-            {/* Header */}
-            <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="mb-8"
-            >
-                <h1 className="text-3xl md:text-4xl font-bold text-primary mb-2">
-                    About This Project
-                </h1>
-                <p className="text-neutral">
-                    A comprehensive deep learning system for concrete crack detection
-                </p>
-            </motion.div>
-
-            {/* Project Overview */}
-            <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.1 }}
-                className="mb-8"
-            >
-                <Card className="p-6">
-                    <h2 className="text-2xl font-bold text-primary mb-4">Project Overview</h2>
-                    <div className="space-y-4 text-neutral">
-                        <p>
-                            This full-stack web application demonstrates the power of deep learning in
-                            automated infrastructure inspection. By comparing two popular convolutional
-                            neural network architectures (VGG16 and ResNet50), we showcase how different
-                            training strategies and model designs impact performance on crack detection tasks.
-                        </p>
-                        <p>
-                            The system allows users to upload concrete images and receive instant predictions
-                            from four different models, providing insights into how data augmentation and
-                            architecture choices affect accuracy and inference time.
-                        </p>
-                    </div>
-                </Card>
-            </motion.div>
-
-            {/* Model Architecture Comparison */}
-            <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2 }}
-                className="mb-8"
-            >
-                <Card className="p-6">
-                    <h2 className="text-2xl font-bold text-primary mb-4">Model Architecture Comparison</h2>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        {/* VGG16 */}
-                        <div className="border border-blue-200 rounded-lg p-4 bg-blue-50">
-                            <h3 className="text-xl font-bold text-blue-700 mb-3">VGG16</h3>
-                            <ul className="space-y-2 text-neutral">
-                                <li className="flex justify-between">
-                                    <span>Layers:</span>
-                                    <span className="font-mono font-semibold">16</span>
-                                </li>
-                                <li className="flex justify-between">
-                                    <span>Parameters:</span>
-                                    <span className="font-mono font-semibold">138M</span>
-                                </li>
-                                <li className="flex justify-between">
-                                    <span>Baseline Accuracy:</span>
-                                    <span className="font-mono font-semibold">99.4%</span>
-                                </li>
-                                <li className="flex justify-between">
-                                    <span>Augmented Accuracy:</span>
-                                    <span className="font-mono font-semibold">99.6%</span>
-                                </li>
-                            </ul>
-                            <p className="mt-4 text-sm text-neutral">
-                                Deep architecture with small 3x3 convolution filters. Known for simplicity
-                                and effectiveness.
-                            </p>
-                        </div>
-
-                        {/* ResNet50 */}
-                        <div className="border border-orange-200 rounded-lg p-4 bg-orange-50">
-                            <h3 className="text-xl font-bold text-orange-700 mb-3">ResNet50</h3>
-                            <ul className="space-y-2 text-neutral">
-                                <li className="flex justify-between">
-                                    <span>Layers:</span>
-                                    <span className="font-mono font-semibold">50</span>
-                                </li>
-                                <li className="flex justify-between">
-                                    <span>Parameters:</span>
-                                    <span className="font-mono font-semibold">25.6M</span>
-                                </li>
-                                <li className="flex justify-between">
-                                    <span>Baseline Accuracy:</span>
-                                    <span className="font-mono font-semibold">80.6%</span>
-                                </li>
-                                <li className="flex justify-between">
-                                    <span>Augmented Accuracy:</span>
-                                    <span className="font-mono font-semibold">99.8%</span>
-                                </li>
-                            </ul>
-                            <p className="mt-4 text-sm text-neutral">
-                                Uses residual connections to enable training of very deep networks with fewer parameters.
-                            </p>
-                        </div>
-                    </div>
-                </Card>
-            </motion.div>
-
-            {/* Technologies Used */}
-            <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3 }}
-                className="mb-8"
-            >
-                <h2 className="text-2xl font-bold text-primary mb-6">Technologies Used</h2>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    {technologies.map((tech, index) => {
-                        const Icon = tech.icon;
-                        return (
-                            <motion.div
-                                key={tech.category}
-                                initial={{ opacity: 0, x: -20 }}
-                                animate={{ opacity: 1, x: 0 }}
-                                transition={{ delay: 0.4 + index * 0.1 }}
-                            >
-                                <Card className="p-6 hover" hover>
-                                    <div className="flex items-center gap-3 mb-4">
-                                        <div className="p-2 bg-accent/10 rounded-lg">
-                                            <Icon className="w-6 h-6 text-accent" />
-                                        </div>
-                                        <h3 className="text-lg font-bold text-primary">{tech.category}</h3>
-                                    </div>
-                                    <ul className="space-y-2">
-                                        {tech.items.map((item) => (
-                                            <li key={item} className="flex items-center gap-2 text-neutral">
-                                                <span className="w-1.5 h-1.5 bg-accent rounded-full" />
-                                                {item}
-                                            </li>
-                                        ))}
-                                    </ul>
-                                </Card>
-                            </motion.div>
-                        );
-                    })}
-                </div>
-            </motion.div>
-
-            {/* Features */}
-            <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.5 }}
-            >
-                <Card className="p-6">
-                    <h2 className="text-2xl font-bold text-primary mb-4">Key Features</h2>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div>
-                            <h3 className="font-semibold text-primary mb-2">Real-time Detection</h3>
-                            <p className="text-neutral text-sm">
-                                Upload images and get instant predictions from multiple models simultaneously
-                            </p>
-                        </div>
-                        <div>
-                            <h3 className="font-semibold text-primary mb-2">Model Comparison</h3>
-                            <p className="text-neutral text-sm">
-                                Compare performance metrics side-by-side to understand trade-offs
-                            </p>
-                        </div>
-                        <div>
-                            <h3 className="font-semibold text-primary mb-2">Training Visualization</h3>
-                            <p className="text-neutral text-sm">
-                                Interactive charts showing accuracy and loss curves over training epochs
-                            </p>
-                        </div>
-                        <div>
-                            <h3 className="font-semibold text-primary mb-2">Responsive Design</h3>
-                            <p className="text-neutral text-sm">
-                                Fully responsive interface that works seamlessly on all devices
-                            </p>
-                        </div>
-                    </div>
-                </Card>
-            </motion.div>
-        </div>
-    );
+const MODEL_DETAILS = {
+  EfficientNetB0: { layers: 'B0 baseline', note: 'Test Acc: 100% · F1: 1.00 · Compound scaling: depth × width × resolution.' },
+  ResNet50:       { layers: '50',          note: 'Test Acc: 100% · F1: 1.00 · Residual skip connections prevent vanishing gradients.' },
+  MobileNetV2:    { layers: 'V2',          note: 'Test Acc: 99% · F1: 0.9881 · Inverted residuals + linear bottlenecks. Edge-optimised.' },
+  DenseNet121:    { layers: '121',         note: 'Test Acc: 100% · F1: 1.00 · Every layer connects to every subsequent layer.' },
 };
 
-export default About;
+export default function About() {
+  return (
+    <div>
+      <SectionHeader
+        label="About"
+        title="System Overview"
+        subtitle="A full-stack deep learning system comparing four CNN architectures on concrete crack detection."
+      />
+
+      {/* Intro */}
+      <Card style={{ marginBottom: 24 }}>
+        <p style={{ color: 'var(--text-secondary)', lineHeight: 1.8, fontSize: 14, marginBottom: 12 }}>
+          This application uses transfer learning to fine-tune four pre-trained convolutional neural
+          networks on the <strong style={{ color: 'var(--text-primary)' }}>Concrete Crack Images</strong> dataset
+          (~40,000 surface photos, balanced crack / no-crack).
+        </p>
+        <p style={{ color: 'var(--text-secondary)', lineHeight: 1.8, fontSize: 14 }}>
+          Each model is trained in two stages: frozen base layers for feature extraction, then
+          selective unfreezing for fine-tuning. Results are aggregated via ensemble averaging
+          of crack probabilities to produce a final verdict.
+        </p>
+      </Card>
+
+      {/* Model cards */}
+      <div style={{ marginBottom: 24 }}>
+        <p style={{ fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '.1em', textTransform: 'uppercase', color: 'var(--text-muted)', marginBottom: 16 }}>
+          Model Architectures
+        </p>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 14 }}>
+          {MODEL_LIST.map(m => {
+            const detail = MODEL_DETAILS[m.key] || {};
+            return (
+              <div key={m.key} className="card" style={{
+                padding: '18px 20px',
+                border: `1px solid color-mix(in srgb, ${m.color} 20%, transparent)`,
+                borderLeft: `3px solid ${m.color}`,
+              }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 10 }}>
+                  <h3 style={{ fontWeight: 700, fontSize: 14, color: 'var(--text-primary)' }}>{m.name}</h3>
+                  <span style={{
+                    fontFamily: 'var(--font-mono)', fontSize: 10,
+                    color: m.color, background: `color-mix(in srgb, ${m.color} 10%, transparent)`,
+                    padding: '2px 8px', borderRadius: 100,
+                  }}>{m.architecture}</span>
+                </div>
+                <p style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--text-muted)', marginBottom: 8 }}>
+                  {(m.parameters / 1e6).toFixed(1)}M parameters
+                </p>
+                <p style={{ fontSize: 12, color: 'var(--text-secondary)', lineHeight: 1.6 }}>{detail.note}</p>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Training setup */}
+      <Card style={{ marginBottom: 24 }}>
+        <p style={{ fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '.1em', textTransform: 'uppercase', color: 'var(--text-muted)', marginBottom: 16 }}>
+          Training Setup
+        </p>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: 16 }}>
+          {[
+            { k: 'Input Size',      v: '224 × 224' },
+            { k: 'Batch Size',      v: '64' },
+            { k: 'Stage 1 Epochs',  v: '10' },
+            { k: 'Stage 2 Epochs',  v: '15' },
+            { k: 'Optimizer',       v: 'Adam' },
+            { k: 'Hardware',        v: 'Kaggle T4 GPU' },
+            { k: 'Deployment',      v: 'HuggingFace' },
+            { k: 'Dataset',         v: '40k images' },
+          ].map(({ k, v }) => (
+            <div key={k} style={{ padding: '12px 14px', background: 'var(--bg-raised)', borderRadius: 10 }}>
+              <p style={{ fontFamily: 'var(--font-mono)', fontSize: 10, color: 'var(--text-muted)', marginBottom: 4, letterSpacing: '.06em' }}>{k}</p>
+              <p style={{ fontFamily: 'var(--font-mono)', fontSize: 15, fontWeight: 600, color: 'var(--accent)' }}>{v}</p>
+            </div>
+          ))}
+        </div>
+      </Card>
+
+      {/* Tech stack */}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 14 }}>
+        {TECH.map(t => {
+          const Icon = t.icon;
+          return (
+            <Card key={t.label} style={{ padding: '18px 20px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 14 }}>
+                <span style={{
+                  width: 30, height: 30, borderRadius: 8,
+                  background: `color-mix(in srgb, ${t.color} 10%, transparent)`,
+                  display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
+                }}>
+                  <Icon size={15} color={t.color} strokeWidth={1.8} />
+                </span>
+                <p style={{ fontWeight: 700, fontSize: 13, color: 'var(--text-primary)' }}>{t.label}</p>
+              </div>
+              <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: 6 }}>
+                {t.items.map(i => (
+                  <li key={i} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                    <span style={{ width: 4, height: 4, borderRadius: '50%', background: t.color, flexShrink: 0 }} />
+                    <span style={{ fontSize: 12, color: 'var(--text-secondary)' }}>{i}</span>
+                  </li>
+                ))}
+              </ul>
+            </Card>
+          );
+        })}
+      </div>
+    </div>
+  );
+}

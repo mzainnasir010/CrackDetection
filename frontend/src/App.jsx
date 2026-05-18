@@ -1,32 +1,23 @@
-import { Routes, Route } from 'react-router-dom';
-import ModernLayout from './components/Layout/ModernLayout';
-import Home from './pages/Home';
-import LiveDetection from './pages/LiveDetection';
-import ModelComparison from './pages/ModelComparison';
-import About from './pages/About';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Layout from './components/Layout/Layout';
+import Home      from './pages/Home';
+import Detect    from './pages/Detect';
+import Metrics   from './pages/Metrics';
+import About     from './pages/About';
+import { ROUTES } from './theme';
+import './global.css';
 
-function App() {
+export default function App() {
   return (
-    <ModernLayout>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/analysis" element={<LiveDetection />} />
-        <Route path="/models" element={<ModelComparison />} />
-        <Route path="/about" element={<About />} />
-
-        {/* 404 Route */}
-        <Route path="*" element={
-          <div className="flex flex-col items-center justify-center min-h-[60vh] text-center">
-            <h1 className="text-6xl font-bold text-primary mb-4">404</h1>
-            <p className="text-xl text-slate-500 mb-8">Page not found</p>
-            <a href="/" className="px-6 py-2 bg-primary text-white rounded-xl hover:bg-primary-hover transition-colors">
-              Go Back Home
-            </a>
-          </div>
-        } />
-      </Routes>
-    </ModernLayout>
+    <BrowserRouter>
+      <Layout>
+        <Routes>
+          <Route path={ROUTES.HOME}    element={<Home />} />
+          <Route path={ROUTES.DETECT}  element={<Detect />} />
+          <Route path={ROUTES.METRICS} element={<Metrics />} />
+          <Route path={ROUTES.ABOUT}   element={<About />} />
+        </Routes>
+      </Layout>
+    </BrowserRouter>
   );
 }
-
-export default App;
