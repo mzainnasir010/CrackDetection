@@ -156,8 +156,4 @@ Open your browser and navigate to `http://localhost:5173`
 ## 📄 License
 This project is created for educational purposes as part of a Deep Learning Lab course.
 
-## 👥 Team
-**Deep Learning Lab - End Semester Project**
 
----
-**Built with ❤️ for Deep Learning Lab**
