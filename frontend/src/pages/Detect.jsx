@@ -12,6 +12,12 @@ import { COLORS, MODEL_META, MODEL_LIST } from '../theme';
 
 /* helpers */
 const THRESHOLD = 0.65;
+const MODEL_WEIGHTS = {
+  EfficientNetB0: 1.00,   // F1 = 1.0000
+  ResNet50:       1.00,   // F1 = 1.0000
+  MobileNetV2:    0.99,   // F1 = 0.9881
+  DenseNet121:    0.20,   // F1 unknown/low — heavily penalized
+};
 function getVerdict(crackProb) {
   if (crackProb > THRESHOLD)     return { label: 'Crack Detected', level: 'crack',     color: COLORS.danger };
   if (crackProb < 1 - THRESHOLD) return { label: 'No Crack Found', level: 'safe',      color: COLORS.accent };
@@ -25,7 +31,7 @@ const SAMPLE_IMAGES = [
     label: 'With Crack',
     tag: 'crack',
     images: [
-      { url: 'https://res.cloudinary.com/defegszzf/image/upload/v1779018413/15001_zjjdsc.jpg',  name: 'Sample C-1' },
+      { url: 'https://res.cloudinary.com/defegszzf/image/upload/v1779018413/15003_muczmi.jpg',  name: 'Sample C-1' },
       { url: 'https://res.cloudinary.com/defegszzf/image/upload/v1779018426/15035_1_b95qgg.jpg', name: 'Sample C-2' },
       { url: 'https://res.cloudinary.com/defegszzf/image/upload/v1779018426/15029_1_xzh58l.jpg', name: 'Sample C-3' },
     ],
@@ -35,7 +41,7 @@ const SAMPLE_IMAGES = [
     tag: 'no-crack',
     images: [
       { url: 'https://res.cloudinary.com/defegszzf/image/upload/v1779018413/15002_llpfnv.jpg', name: 'Sample N-1' },
-      { url: 'https://res.cloudinary.com/defegszzf/image/upload/v1779018413/15003_muczmi.jpg', name: 'Sample N-2' },
+      { url: 'https://res.cloudinary.com/defegszzf/image/upload/v1779212995/15048_wgqpji.jpg', name: 'Sample N-2' },
       { url: 'https://res.cloudinary.com/defegszzf/image/upload/v1779018413/15001_zjjdsc.jpg', name: 'Sample N-3' },
     ],
   },
@@ -124,7 +130,36 @@ function EnsembleVerdict({ predictions }) {
   const crackProbs = predictions.map(p =>
     p.crack_prob ?? (p.prediction === 'crack' ? p.confidence : 1 - p.confidence)
   );
-  const avg     = crackProbs.reduce((a, b) => a + b, 0) / crackProbs.length;
+
+  const predMap = {};
+  predictions.forEach(p => {
+    predMap[p.model] = p.crack_prob ?? (p.prediction === 'crack' ? p.confidence : 1 - p.confidence);
+  });
+
+  let avg;
+  let hasAnchorShortCircuit = false;
+
+  // Safeguard: Check if both EfficientNetB0 and ResNet50 are selected and present
+  if (predMap.EfficientNetB0 !== undefined && predMap.ResNet50 !== undefined) {
+    const anchorAvg = (predMap.EfficientNetB0 + predMap.ResNet50) / 2;
+    if (anchorAvg <= 0.05 || anchorAvg >= 0.95) {
+      avg = anchorAvg;
+      hasAnchorShortCircuit = true;
+    }
+  }
+
+  if (!hasAnchorShortCircuit) {
+    let weightedSum = 0;
+    let totalWeight = 0;
+    predictions.forEach(p => {
+      const prob = predMap[p.model];
+      const w = MODEL_WEIGHTS[p.model] ?? 1.0;
+      weightedSum += prob * w;
+      totalWeight += w;
+    });
+    avg = totalWeight > 0 ? (weightedSum / totalWeight) : 0;
+  }
+
   const verdict = getVerdict(avg);
   const flagged = crackProbs.filter(p => p > THRESHOLD).length;
 
