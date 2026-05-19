@@ -6,7 +6,7 @@ const { startPingService } = require('./services/pingService');
 const predictionRoutes = require('./routes/predictionRoutes');
 
 const app = express();
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 5000;
 
 app.use(cors({
     origin: process.env.FRONTEND_URL,
